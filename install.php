@@ -1,64 +1,42 @@
 <?php
-/*
-Plugin Name: WP Smart Variations
-Author: <strong>Rajan V, A2Z Technologies</strong>
-Version: 1.0
-Description: This is variations plugin for WP-e Commerce Site.
-*/
+/**
+ * Plugin Name:          SwatchCraft – Variation Swatches for WooCommerce
+ * Plugin URI:           https://wordpress.org/plugins/wp-smart-variations/
+ * Description:          Colour, image and button swatches for WooCommerce variations, on product pages and product cards, with variation image galleries and a variations table.
+ * Version:              3.0.0-dev
+ * Requires at least:    6.5
+ * Requires PHP:         7.4
+ * Requires Plugins:     woocommerce
+ * Author:               Rajan V
+ * Author URI:           https://profiles.wordpress.org/rajanit2000/
+ * License:              GPL-2.0-or-later
+ * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:          wp-smart-variations
+ * WC requires at least: 9.0
+ * WC tested up to:      11.2
+ *
+ * @package SwatchCraft
+ */
 
-/*  Copyright 2007-2014 Rajan V (email: ratanit2000 at gmail.com)
+defined( 'ABSPATH' ) || exit;
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+define( 'SWATCHCRAFT_VERSION', '3.0.0-dev' );
+define( 'SWATCHCRAFT_FILE', __FILE__ );
+define( 'SWATCHCRAFT_DIR', plugin_dir_path( __FILE__ ) );
+define( 'SWATCHCRAFT_URL', plugin_dir_url( __FILE__ ) );
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
-
-// Hook for adding admin menus
-add_action('wp_footer', 'variationScript');
-add_action('wp_head', 'whshCSS');
-
-function whshCSS(){
-	echo '<link type="text/css" rel="stylesheet" href="'.plugins_url().'/wp-smart-variations/css/custom.css" />';
+if ( ! file_exists( SWATCHCRAFT_DIR . 'vendor/autoload.php' ) ) {
+	add_action(
+		'admin_notices',
+		static function () {
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'SwatchCraft is missing its vendor folder. Run composer install, or install the plugin from WordPress.org.', 'wp-smart-variations' ) . '</p></div>';
+		}
+	);
+	return;
 }
 
-function variationScript() {
-    ?>
-	<script type="text/javascript" >
-	jQuery(function(){
-		jQuery('.wpsc_variation_forms').append('<div class="new-variation-div"></div>');
-		var i = 0;
-		jQuery( ".wpsc_variation_forms" ).each(function() {
-			var output = '';
-			var variation = '';
-			jQuery(this).find('.wpsc_select_variation').each(function(){
-				var name = jQuery(this).attr('name');
-					jQuery(this).find('option').each(function(){
-						var val = jQuery(this).text();
-						var value = jQuery(this).attr('value');
-						if( value != '0' ){
-							variation = variation + '<label class="new-variation-radio radio-variation" for="'+name+i+'"><input class="wpsc_select_variation" type="radio" id="'+name+i+'" name="'+name+'" value="'+value+'" rel=' + val +' />'+val+'</label>';
-						}
-						i++;
-					});
-					variation = '<div class="variation-variation">'+variation+'</div>';
-				output = variation;
-			});
-			jQuery(this).find('.new-variation-div').html( output );
-			jQuery(this).find('table').hide();
-		});
-	});
-    </script>
-	<?php
-}
+require SWATCHCRAFT_DIR . 'vendor/autoload.php';
 
-?>
+register_activation_hook( __FILE__, array( 'SwatchCraft\Plugin', 'activate' ) );
+
+SwatchCraft\Plugin::boot();

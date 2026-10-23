@@ -1,0 +1,21 @@
+.swatchcraft-wpsc {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 6px 0;
+}
+
+.swatchcraft-wpsc label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.swatchcraft-wpsc label:has(input:checked) {
+	border-color: currentcolor;
+	font-weight: 600;
+}

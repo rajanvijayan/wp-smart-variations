@@ -1,0 +1,28 @@
+.swatchcraft-media {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.swatchcraft-media__preview {
+	width: 48px;
+	height: 48px;
+	object-fit: cover;
+	border-radius: 4px;
+	border: 1px solid #dcdcde;
+}
+
+.swatchcraft-preview {
+	display: inline-block;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	object-fit: cover;
+	vertical-align: middle;
+}
+
+.column-swatchcraft {
+	width: 44px;
+}
