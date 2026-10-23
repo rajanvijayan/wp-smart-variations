@@ -32,7 +32,13 @@ class Test_Admin extends SwatchCraft_TestCase {
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
 		$_POST['_swatchcraft_nonce'] = wp_create_nonce( Attribute_Fields::NONCE );
 		Attribute_Fields::save( $color['id'] );
-		$this->assertSame( array( 'type' => 'color', 'loop' => true ), Swatch_Data::attribute( 'pa_color' ) );
+		$this->assertSame(
+			array(
+				'type' => 'color',
+				'loop' => true,
+			),
+			Swatch_Data::attribute( 'pa_color' )
+		);
 
 		$_POST['_swatchcraft_nonce'] = 'wrong';
 		$_POST['swatchcraft_type']   = 'image';

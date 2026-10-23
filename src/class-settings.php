@@ -23,7 +23,7 @@ final class Settings {
 		'size'          => array( 'small', 'medium', 'large' ),
 		'unavailable'   => array( 'cross', 'hide' ),
 		'out_of_stock'  => array( 'cross', 'clickable', 'hide' ),
-		'loop_position' => array( 'after_title', 'before_cart', 'after_cart' ),
+		'loop_position' => array( 'before_cart', 'after_cart' ),
 		'table'         => array( 'off', 'after_cart', 'replace_cart' ),
 	);
 
@@ -58,7 +58,7 @@ final class Settings {
 			// Attribute shown on product cards ('' picks the first colour or image attribute).
 			'loop_attribute' => '',
 			'loop_limit'     => 5,
-			'loop_position'  => 'after_title',
+			'loop_position'  => 'before_cart',
 			'gallery'        => true,
 			'table'          => 'off',
 		);

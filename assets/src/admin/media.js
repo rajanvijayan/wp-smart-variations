@@ -6,7 +6,9 @@
 import { __ } from '@wordpress/i18n';
 
 function preview( wrapper, attachments ) {
-	wrapper.querySelectorAll( '.swatchcraft-media__preview' ).forEach( ( img ) => img.remove() );
+	wrapper
+		.querySelectorAll( '.swatchcraft-media__preview' )
+		.forEach( ( img ) => img.remove() );
 	const choose = wrapper.querySelector( '[data-action="choose"]' );
 	attachments.forEach( ( attachment ) => {
 		const sizes = attachment.sizes || {};
@@ -44,13 +46,18 @@ function open( wrapper ) {
 		const chosen = frame.state().get( 'selection' ).toJSON();
 		input.value = chosen.map( ( a ) => a.id ).join( ',' );
 		preview( wrapper, chosen );
-		wrapper.querySelector( '[data-action="remove"]' ).hidden = ! chosen.length;
+		wrapper.querySelector( '[data-action="remove"]' ).hidden =
+			! chosen.length;
 		// WooCommerce's variation panels only save when they are marked as changed.
 		input.dispatchEvent( new Event( 'change', { bubbles: true } ) );
 		const variation = wrapper.closest( '.woocommerce_variation' );
 		if ( variation ) {
 			variation.classList.add( 'variation-needs-update' );
-			window.jQuery( 'button.cancel-variation-changes, button.save-variation-changes' ).prop( 'disabled', false );
+			window
+				.jQuery(
+					'button.cancel-variation-changes, button.save-variation-changes'
+				)
+				.prop( 'disabled', false );
 		}
 	} );
 	frame.open();
@@ -58,7 +65,9 @@ function open( wrapper ) {
 
 export default function initMedia() {
 	document.addEventListener( 'click', ( event ) => {
-		const button = event.target.closest( '[data-swatchcraft-media] [data-action]' );
+		const button = event.target.closest(
+			'[data-swatchcraft-media] [data-action]'
+		);
 		if ( ! button ) {
 			return;
 		}
@@ -71,6 +80,8 @@ export default function initMedia() {
 		wrapper.querySelector( 'input[type="hidden"]' ).value = '';
 		preview( wrapper, [] );
 		button.hidden = true;
-		wrapper.querySelector( 'input[type="hidden"]' ).dispatchEvent( new Event( 'change', { bubbles: true } ) );
+		wrapper
+			.querySelector( 'input[type="hidden"]' )
+			.dispatchEvent( new Event( 'change', { bubbles: true } ) );
 	} );
 }

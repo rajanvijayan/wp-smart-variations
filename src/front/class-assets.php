@@ -20,6 +20,7 @@ final class Assets {
 	 */
 	public static function register() {
 		add_action( 'init', array( self::class, 'register_assets' ) );
+		add_action( 'wp_head', array( self::class, 'js_flag' ), 1 );
 	}
 
 	/**
@@ -51,6 +52,13 @@ final class Assets {
 		wp_register_script( 'swatchcraft-admin', SWATCHCRAFT_URL . 'build/admin.js', array_merge( $admin['dependencies'], array( 'jquery', 'wp-color-picker' ) ), $admin['version'], true );
 		wp_set_script_translations( 'swatchcraft-admin', 'wp-smart-variations' );
 		wp_register_style( 'swatchcraft-admin', SWATCHCRAFT_URL . 'build/admin.css', array( 'wp-color-picker' ), $admin['version'] );
+	}
+
+	/**
+	 * Mark the page as able to run scripts, so swatches replace the selects only when they work.
+	 */
+	public static function js_flag() {
+		wp_print_inline_script_tag( "document.documentElement.classList.add('swatchcraft-js');" );
 	}
 
 	/**

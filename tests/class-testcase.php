@@ -53,9 +53,9 @@ abstract class SwatchCraft_TestCase extends WP_UnitTestCase {
 		}
 		$out = array();
 		foreach ( $terms as $term ) {
-			$existing = term_exists( $term, $taxonomy );
-			$result   = $existing ? $existing : wp_insert_term( $term, $taxonomy );
-			$slug     = get_term( (int) $result['term_id'], $taxonomy )->slug;
+			$existing     = term_exists( $term, $taxonomy );
+			$result       = $existing ? $existing : wp_insert_term( $term, $taxonomy );
+			$slug         = get_term( (int) $result['term_id'], $taxonomy )->slug;
 			$out[ $slug ] = (int) $result['term_id'];
 		}
 		if ( '' !== $type ) {

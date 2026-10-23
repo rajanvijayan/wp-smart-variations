@@ -70,7 +70,13 @@ class Test_Swatch_Data extends SwatchCraft_TestCase {
 				'size'     => $size,
 				'Material' => array( 'Cotton', 'Linen' ),
 			),
-			array( array( 'pa_color' => 'red', 'pa_size' => 's', 'material' => 'Cotton' ) )
+			array(
+				array(
+					'pa_color' => 'red',
+					'pa_size'  => 's',
+					'material' => 'Cotton',
+				),
+			)
 		);
 
 		$this->assertSame( 'color', Swatch_Data::type( $product, 'pa_color' ) );
@@ -100,9 +106,20 @@ class Test_Swatch_Data extends SwatchCraft_TestCase {
 				'color' => $color,
 				'Size'  => array( 'Small', 'Large' ),
 			),
-			array( array( 'pa_color' => 'red', 'size' => 'Small' ) )
+			array(
+				array(
+					'pa_color' => 'red',
+					'size'     => 'Small',
+				),
+			)
 		);
-		Swatch_Data::save_term( $color['terms']['red'], array( 'color' => '#ff0000', 'label' => 'R' ) );
+		Swatch_Data::save_term(
+			$color['terms']['red'],
+			array(
+				'color' => '#ff0000',
+				'label' => 'R',
+			)
+		);
 		Swatch_Data::save_term( $color['terms']['blue'], array( 'color' => '#0000ff' ) );
 		Swatch_Data::save_product(
 			$product->get_id(),
@@ -140,7 +157,13 @@ class Test_Swatch_Data extends SwatchCraft_TestCase {
 			)
 		);
 		$this->assertSame( '', get_post_meta( $id, Swatch_Data::PRODUCT_META, true ) );
-		Swatch_Data::save_product( $id, array( 'loop' => '0', 'table' => 'show' ) );
+		Swatch_Data::save_product(
+			$id,
+			array(
+				'loop'  => '0',
+				'table' => 'show',
+			)
+		);
 		$this->assertSame(
 			array(
 				'attributes' => array(),
@@ -153,8 +176,20 @@ class Test_Swatch_Data extends SwatchCraft_TestCase {
 
 	public function test_attribute_settings_and_deletion() {
 		$color = $this->attribute( 'color', array( 'Red' ) );
-		Swatch_Data::save_attribute( $color['id'], array( 'type' => 'image', 'loop' => true ) );
-		$this->assertSame( array( 'type' => 'image', 'loop' => true ), Swatch_Data::attribute( 'pa_color' ) );
+		Swatch_Data::save_attribute(
+			$color['id'],
+			array(
+				'type' => 'image',
+				'loop' => true,
+			)
+		);
+		$this->assertSame(
+			array(
+				'type' => 'image',
+				'loop' => true,
+			),
+			Swatch_Data::attribute( 'pa_color' )
+		);
 		Swatch_Data::save_attribute( $color['id'], array( 'type' => 'bogus' ) );
 		$this->assertSame( '', Swatch_Data::attribute( 'pa_color' )['type'] );
 		do_action( 'woocommerce_attribute_deleted', $color['id'], 'color', 'pa_color' );

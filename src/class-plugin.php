@@ -47,6 +47,12 @@ final class Plugin {
 		}
 		Admin\Attribute_Fields::register();
 		Admin\Term_Fields::register();
+		Admin\Product_Tab::register();
+		Front\Swatches::register();
+		Front\Loop_Swatches::register();
+		Front\Gallery::register();
+		Front\Table::register();
+		add_action( 'rest_api_init', array( Rest\Cart_Controller::class, 'register_routes' ) );
 		/**
 		 * Fires when SwatchCraft has loaded with WooCommerce (for extensions).
 		 */

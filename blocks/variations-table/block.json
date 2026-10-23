@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "swatchcraft/variations-table",
+	"title": "Variations Table",
+	"category": "woocommerce",
+	"icon": "editor-table",
+	"description": "Every variation of a product with price, stock and quantity, and one button to add them all to the cart.",
+	"keywords": [ "variations", "bulk", "order form", "swatches" ],
+	"textdomain": "wp-smart-variations",
+	"attributes": {
+		"productId": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "swatchcraft-blocks",
+	"style": "swatchcraft"
+}

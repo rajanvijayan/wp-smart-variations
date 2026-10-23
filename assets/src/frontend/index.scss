@@ -1,0 +1,380 @@
+/**
+ * SwatchCraft swatches. Themes can restyle them with these custom properties.
+ */
+
+:root {
+	--swatchcraft-size: 36px;
+	--swatchcraft-radius: 8px;
+	--swatchcraft-gap: 8px;
+	--swatchcraft-border: rgba(0, 0, 0, 0.18);
+	--swatchcraft-active: currentcolor;
+	--swatchcraft-surface: #fff;
+	--swatchcraft-muted: rgba(0, 0, 0, 0.55);
+	--swatchcraft-tooltip-bg: #1e1e1e;
+	--swatchcraft-tooltip-text: #fff;
+}
+
+/*
+ * WooCommerce still drives the select; it is replaced visually by the swatches. Without
+ * JavaScript the swatches cannot work, so the selects stay.
+ */
+.swatchcraft-js .swatchcraft-select {
+	display: none !important;
+}
+
+html:not(.swatchcraft-js) .swatchcraft,
+html:not(.swatchcraft-js) .swatchcraft-loop {
+	display: none !important;
+}
+
+.swatchcraft {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--swatchcraft-gap);
+	margin: 4px 0 8px;
+}
+
+.swatchcraft--small {
+	--swatchcraft-size: 28px;
+}
+
+.swatchcraft--large {
+	--swatchcraft-size: 46px;
+}
+
+.swatchcraft--round {
+	--swatchcraft-radius: 999px;
+}
+
+.swatchcraft--square {
+	--swatchcraft-radius: 2px;
+}
+
+/*
+ * Themes style every <button>, often with selectors such as
+ * button:not(:hover):not(:active):not(.has-background). The swatch look is therefore set once,
+ * with !important, from private custom properties that each state changes.
+ */
+.swatchcraft__option {
+	--swatchcraft-option-bg: var(--swatchcraft-surface);
+	--swatchcraft-option-border: var(--swatchcraft-border);
+	--swatchcraft-option-shadow: none;
+	--swatchcraft-option-padding: 0;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-width: var(--swatchcraft-size);
+	min-height: var(--swatchcraft-size);
+	margin: 0;
+	padding: var(--swatchcraft-option-padding) !important;
+	border: 1px solid var(--swatchcraft-option-border) !important;
+	border-radius: var(--swatchcraft-radius) !important;
+	background: var(--swatchcraft-option-bg) !important;
+	box-shadow: var(--swatchcraft-option-shadow) !important;
+	color: inherit !important;
+	font: inherit;
+	font-size: 0.875em;
+	line-height: 1.2;
+	letter-spacing: normal !important;
+	text-decoration: none !important;
+	text-transform: none !important;
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		opacity 0.15s ease;
+
+	&:hover {
+		--swatchcraft-option-border: var(--swatchcraft-active);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--swatchcraft-active);
+		outline-offset: 2px;
+	}
+
+	&.is-selected {
+		--swatchcraft-option-border: var(--swatchcraft-active);
+		--swatchcraft-option-shadow: inset 0 0 0 1px var(--swatchcraft-active);
+	}
+
+	&[hidden] {
+		display: none;
+	}
+}
+
+/* Colour and image swatches: the visual fills the swatch, with a white ring when selected. */
+.swatchcraft--color .swatchcraft__option,
+.swatchcraft--image .swatchcraft__option {
+	--swatchcraft-option-padding: 3px;
+	width: var(--swatchcraft-size);
+	height: var(--swatchcraft-size);
+
+	&.is-selected {
+		--swatchcraft-option-shadow:
+			inset 0 0 0 1px var(--swatchcraft-active),
+			inset 0 0 0 3px var(--swatchcraft-surface);
+	}
+}
+
+.swatchcraft__swatch {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	border-radius: calc(var(--swatchcraft-radius) - 3px);
+	--swatchcraft-c1: var(--swatchcraft-color, #ccc);
+	background: linear-gradient(135deg, var(--swatchcraft-c1) 50%, var(--swatchcraft-color-2, var(--swatchcraft-c1)) 50%);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		margin: 0;
+	}
+}
+
+.swatchcraft--round .swatchcraft__swatch {
+	border-radius: 999px;
+}
+
+.swatchcraft__fallback {
+	display: grid;
+	place-items: center;
+	height: 100%;
+	font-size: 0.7em;
+}
+
+/* Buttons and radios. */
+.swatchcraft--button .swatchcraft__option {
+	--swatchcraft-option-padding: 0 12px;
+}
+
+.swatchcraft--radio {
+	flex-direction: column;
+	gap: 6px;
+
+	.swatchcraft__option,
+	.swatchcraft__option.is-selected {
+		--swatchcraft-option-padding: 2px 0;
+		--swatchcraft-option-border: transparent;
+		--swatchcraft-option-bg: transparent;
+		--swatchcraft-option-shadow: none;
+		justify-content: flex-start;
+		min-height: 0;
+	}
+}
+
+.swatchcraft__dot {
+	width: 18px;
+	height: 18px;
+	flex: none;
+	border: 2px solid var(--swatchcraft-border);
+	border-radius: 50%;
+}
+
+.swatchcraft--radio .is-selected .swatchcraft__dot {
+	border-color: var(--swatchcraft-active);
+	box-shadow: inset 0 0 0 3px var(--swatchcraft-surface);
+	background: var(--swatchcraft-active);
+}
+
+/* Not available with the other choices, or out of stock: faded and crossed out. */
+.swatchcraft__option.is-unavailable,
+.swatchcraft__option.is-out-of-stock {
+	opacity: 0.45;
+
+	&::before {
+		content: "";
+		position: absolute;
+		z-index: 1;
+		inset: 50% -2px auto;
+		height: 1px;
+		background: var(--swatchcraft-active);
+		transform: rotate(-35deg);
+		pointer-events: none;
+	}
+}
+
+.swatchcraft--radio .swatchcraft__option.is-unavailable::before,
+.swatchcraft--radio .swatchcraft__option.is-out-of-stock::before {
+	display: none;
+}
+
+.swatchcraft__option[aria-disabled="true"] {
+	cursor: not-allowed;
+}
+
+/* Tooltips. */
+.swatchcraft__option[data-tooltip]::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	z-index: 20;
+	bottom: calc(100% + 8px);
+	left: 50%;
+	padding: 5px 9px;
+	border-radius: 4px;
+	background: var(--swatchcraft-tooltip-bg);
+	color: var(--swatchcraft-tooltip-text);
+	font-size: 12px;
+	line-height: 1.3;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transform: translate(-50%, 4px);
+	transition:
+		opacity 0.15s ease,
+		transform 0.15s ease;
+	pointer-events: none;
+}
+
+.swatchcraft__option:hover::after,
+.swatchcraft__option:focus-visible::after {
+	opacity: 1;
+	visibility: visible;
+	transform: translate(-50%, 0);
+}
+
+.swatchcraft--no-tooltips .swatchcraft__option::after,
+.swatchcraft--button .swatchcraft__option:not(.is-unavailable):not(.is-out-of-stock)::after,
+.swatchcraft--radio .swatchcraft__option::after {
+	display: none;
+}
+
+.swatchcraft-selected {
+	font-weight: 400;
+	color: var(--swatchcraft-muted);
+}
+
+/* Product cards. */
+.swatchcraft-loop {
+	margin: 6px 0;
+
+	.swatchcraft {
+		--swatchcraft-size: 24px;
+		gap: 6px;
+		margin: 0;
+	}
+
+	.wc-block-product &,
+	.has-text-align-center &,
+	li.product & {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+.swatchcraft--loop.swatchcraft--button .swatchcraft__option {
+	--swatchcraft-option-padding: 0 8px;
+	font-size: 0.75em;
+}
+
+.swatchcraft__more {
+	align-self: center;
+	font-size: 0.8em;
+	color: var(--swatchcraft-muted);
+	text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.swatchcraft__option,
+	.swatchcraft__option::after {
+		transition: none;
+	}
+}
+
+/* Variations table. */
+.swatchcraft-table {
+	margin: 1.5em 0;
+
+	&.is-loading {
+		opacity: 0.6;
+		pointer-events: none;
+	}
+}
+
+.swatchcraft-table__scroll {
+	overflow-x: auto;
+}
+
+.swatchcraft-table table {
+	width: 100%;
+	margin: 0;
+	border-collapse: collapse;
+
+	th,
+	td {
+		padding: 10px 8px;
+		border-bottom: 1px solid var(--swatchcraft-border);
+		text-align: left;
+		vertical-align: middle;
+	}
+
+	.stock {
+		margin: 0;
+	}
+}
+
+.swatchcraft-table__image {
+	width: 64px;
+
+	img {
+		display: block;
+		width: 48px;
+		height: 48px;
+		object-fit: cover;
+		border-radius: 4px;
+	}
+}
+
+.swatchcraft-table__qty input {
+	width: 4.5em;
+}
+
+.swatchcraft-table__footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	margin: 12px 0 0;
+}
+
+.swatchcraft-table__message {
+	color: var(--swatchcraft-muted);
+}
+
+@media (max-width: 600px) {
+
+	.swatchcraft-table thead {
+		display: none;
+	}
+
+	.swatchcraft-table tr {
+		display: grid;
+		grid-template-columns: 56px 1fr auto;
+		gap: 4px 10px;
+		padding: 10px 0;
+		border-bottom: 1px solid var(--swatchcraft-border);
+	}
+
+	.swatchcraft-table td {
+		padding: 0;
+		border: 0;
+	}
+
+	.swatchcraft-table__image {
+		grid-row: span 3;
+	}
+
+	.swatchcraft-table__qty {
+		grid-column: 3;
+		grid-row: 1 / span 3;
+		align-self: center;
+	}
+}
