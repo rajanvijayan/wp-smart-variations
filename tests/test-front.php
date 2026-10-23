@@ -125,6 +125,13 @@ class Test_Front extends SwatchCraft_TestCase {
 		$this->assertStringNotContainsString( '<script>', $html );
 	}
 
+	public function test_clear_link_setting() {
+		$link = '<a class="reset_variations" href="#">Clear</a>';
+		$this->assertSame( $link, apply_filters( 'woocommerce_reset_variations_link', $link ) );
+		Settings::save( array( 'clear_link' => false ) );
+		$this->assertSame( '', apply_filters( 'woocommerce_reset_variations_link', $link ) );
+	}
+
 	public function test_tooltip_price_and_stock() {
 		Settings::save(
 			array(

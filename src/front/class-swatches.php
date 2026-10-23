@@ -26,6 +26,17 @@ final class Swatches {
 		add_filter( 'woocommerce_dropdown_variation_attribute_options_html', array( self::class, 'filter' ), 20, 2 );
 		add_filter( 'woocommerce_ajax_variation_threshold', array( self::class, 'threshold' ), 10, 2 );
 		add_filter( 'body_class', array( self::class, 'body_class' ) );
+		add_filter( 'woocommerce_reset_variations_link', array( self::class, 'reset_link' ) );
+	}
+
+	/**
+	 * WooCommerce's "Clear" link, unless switched off (clicking a chosen swatch clears it too).
+	 *
+	 * @param string $html Link HTML.
+	 * @return string
+	 */
+	public static function reset_link( $html ) {
+		return Settings::get( 'clear_link' ) ? $html : '';
 	}
 
 	/**

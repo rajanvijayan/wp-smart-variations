@@ -10,6 +10,7 @@
 	--swatchcraft-active: currentcolor;
 	--swatchcraft-surface: #fff;
 	--swatchcraft-muted: rgba(0, 0, 0, 0.55);
+	--swatchcraft-faded-border: rgba(0, 0, 0, 0.1);
 	--swatchcraft-tooltip-bg: #1e1e1e;
 	--swatchcraft-tooltip-text: #fff;
 }
@@ -183,12 +184,24 @@ html:not(.swatchcraft-js) .swatchcraft-loop {
 	background: var(--swatchcraft-active);
 }
 
-/* Not available with the other choices, or out of stock: faded and crossed out. */
+/*
+ * Not available with the other choices, or out of stock: faded and crossed out. The contents
+ * fade, not the button, so its tooltip stays readable.
+ */
 .swatchcraft__option.is-unavailable,
 .swatchcraft__option.is-out-of-stock {
-	opacity: 0.45;
+	--swatchcraft-option-border: var(--swatchcraft-faded-border);
+
+	&.is-selected {
+		--swatchcraft-option-border: var(--swatchcraft-active);
+	}
+
+	> * {
+		opacity: 0.45;
+	}
 
 	&::before {
+		opacity: 0.6;
 		content: "";
 		position: absolute;
 		z-index: 1;

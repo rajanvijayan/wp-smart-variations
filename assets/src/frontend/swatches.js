@@ -249,8 +249,10 @@ export default function initSwatches() {
 		choose( button.closest( '.variations_form' ), button );
 	} );
 	document.addEventListener( 'keydown', onKey );
+	// Above the AJAX threshold WooCommerce skips woocommerce_update_variation_values, but it
+	// always fires woocommerce_variation_has_changed.
 	$( document ).on(
-		'woocommerce_update_variation_values reset_data wc_variation_form',
+		'woocommerce_update_variation_values woocommerce_variation_has_changed reset_data wc_variation_form',
 		'.variations_form',
 		function () {
 			sync( this );

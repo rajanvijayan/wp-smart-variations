@@ -3,7 +3,7 @@
  * Plugin Name:          SwatchCraft – Variation Swatches for WooCommerce
  * Plugin URI:           https://wordpress.org/plugins/wp-smart-variations/
  * Description:          Colour, image and button swatches for WooCommerce variations, on product pages and product cards, with variation image galleries and a variations table.
- * Version:              3.0.0-dev
+ * Version:              3.0.0
  * Requires at least:    6.5
  * Requires PHP:         7.4
  * Requires Plugins:     woocommerce
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SWATCHCRAFT_VERSION', '3.0.0-dev' );
+define( 'SWATCHCRAFT_VERSION', '3.0.0' );
 define( 'SWATCHCRAFT_FILE', __FILE__ );
 define( 'SWATCHCRAFT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SWATCHCRAFT_URL', plugin_dir_url( __FILE__ ) );
