@@ -1,0 +1,128 @@
+.swatchcraft-settings {
+	max-width: 1100px;
+
+	h2 {
+		margin: 0 0 4px;
+		font-size: 15px;
+	}
+
+	.components-notice {
+		margin: 0 0 16px;
+	}
+}
+
+.swatchcraft-settings__header {
+	display: flex;
+	align-items: baseline;
+	gap: 12px;
+	margin: 8px 0 16px;
+
+	h1 {
+		margin: 0;
+		padding: 0;
+	}
+}
+
+.swatchcraft-settings__version {
+	color: #757575;
+}
+
+.swatchcraft-settings__tabs .components-tab-panel__tabs {
+	flex-wrap: wrap;
+	border-bottom: 1px solid #ddd;
+}
+
+.swatchcraft-settings__panel {
+	padding: 20px 0;
+}
+
+.swatchcraft-settings__section {
+	margin: 0 0 16px;
+	padding: 20px 24px;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	background: #fff;
+
+	> .description {
+		margin: 0 0 16px;
+	}
+}
+
+.swatchcraft-settings__stack {
+	display: grid;
+	gap: 16px;
+	max-width: 560px;
+}
+
+.swatchcraft-settings__columns {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+
+	@media (max-width: 960px) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	> .swatchcraft-settings__section:last-child {
+		position: sticky;
+		top: 48px;
+	}
+}
+
+.swatchcraft-settings__preview {
+	color: #1e1e1e;
+
+	table.variations {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	th,
+	td {
+		padding: 8px 12px 8px 0;
+		text-align: left;
+		vertical-align: top;
+	}
+
+	th {
+		width: 130px;
+		padding-top: 14px;
+		font-weight: 600;
+	}
+
+	.swatchcraft {
+		margin: 4px 0;
+	}
+
+	select {
+		min-width: 200px;
+	}
+}
+
+.swatchcraft-settings__clear {
+	margin-top: 4px;
+}
+
+.swatchcraft-settings__attributes {
+
+	td {
+		vertical-align: middle;
+	}
+}
+
+.swatchcraft-settings__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 16px;
+}
+
+.swatchcraft-settings__footer {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.swatchcraft-settings__unsaved {
+	color: #757575;
+}
